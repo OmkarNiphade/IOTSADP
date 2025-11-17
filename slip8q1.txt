@@ -1,0 +1,165 @@
+// Write a Java Program to implement State Pattern for Gumball Machine.
+// Create instance variable that holds current state from there, we just need to handle all 
+// actions, behaviors and state transition that can happen 
+interface State {
+    void insertCoin();
+    void ejectCoin();
+    void turnCrank();
+    void dispense();
+}
+class NoCoinState implements State {
+    GumballMachine machine;
+
+    public NoCoinState(GumballMachine m) {
+        this.machine = m;
+    }
+
+    public void insertCoin() {
+        System.out.println("Coin Inserted");
+        machine.setState(machine.hasCoinState);
+    }
+
+    public void ejectCoin() {
+        System.out.println("You haven't inserted a coin");
+    }
+
+    public void turnCrank() {
+        System.out.println("Turned crank but no coin");
+    }
+
+    public void dispense() {
+        System.out.println("Insert coin first");
+    }
+}
+class HasCoinState implements State {
+    GumballMachine machine;
+
+    public HasCoinState(GumballMachine m) {
+        this.machine = m;
+    }
+
+    public void insertCoin() {
+        System.out.println("Coin already inserted");
+    }
+
+    public void ejectCoin() {
+        System.out.println("Coin Returned");
+        machine.setState(machine.noCoinState);
+    }
+
+    public void turnCrank() {
+        System.out.println("Crank turned...");
+        machine.setState(machine.soldState);
+    }
+
+    public void dispense() {
+        System.out.println("No gumball dispensed");
+    }
+}
+class SoldState implements State {
+    GumballMachine machine;
+
+    public SoldState(GumballMachine m) {
+        this.machine = m;
+    }
+
+    public void insertCoin() {
+        System.out.println("Please wait… dispensing");
+    }
+
+    public void ejectCoin() {
+        System.out.println("Cannot eject, crank already turned");
+    }
+
+    public void turnCrank() {
+        System.out.println("Turning twice won't help!");
+    }
+
+    public void dispense() {
+        System.out.println("A gumball comes rolling out...");
+        machine.releaseBall();
+
+        if (machine.count > 0) {
+            machine.setState(machine.noCoinState);
+        } else {
+            System.out.println("Oops! Out of gumballs!");
+            machine.setState(machine.soldOutState);
+        }
+    }
+}
+class SoldOutState implements State {
+    GumballMachine machine;
+
+    public SoldOutState(GumballMachine m) {
+        this.machine = m;
+    }
+
+    public void insertCoin() {
+        System.out.println("Machine is sold out");
+    }
+
+    public void ejectCoin() {
+        System.out.println("No coin to eject");
+    }
+
+    public void turnCrank() {
+        System.out.println("No gumballs left");
+    }
+
+    public void dispense() {
+        System.out.println("Nothing to dispense");
+    }
+}
+class GumballMachine {
+    State noCoinState;
+    State hasCoinState;
+    State soldState;
+    State soldOutState;
+
+    State state;
+    int count = 0;
+
+    public GumballMachine(int count) {
+        noCoinState = new NoCoinState(this);
+        hasCoinState = new HasCoinState(this);
+        soldState = new SoldState(this);
+        soldOutState = new SoldOutState(this);
+
+        this.count = count;
+        state = (count > 0) ? noCoinState : soldOutState;
+    }
+
+    void setState(State s) {
+        state = s;
+    }
+
+    // Actions
+    void insertCoin() { state.insertCoin(); }
+    void ejectCoin() { state.ejectCoin(); }
+    void turnCrank() {
+        state.turnCrank();
+        state.dispense();
+    }
+
+    void releaseBall() {
+        if (count > 0) {
+            count--;
+            System.out.println("Gumball released. Remaining: " + count);
+        }
+    }
+}
+public class Slip8q1 {
+    public static void main(String[] args) {
+        GumballMachine machine = new GumballMachine(2);
+
+        machine.insertCoin();
+        machine.turnCrank();
+
+        machine.insertCoin();
+        machine.turnCrank();
+
+        // Machine is now empty
+        machine.insertCoin();
+        machine.turnCrank();
+    }
+}

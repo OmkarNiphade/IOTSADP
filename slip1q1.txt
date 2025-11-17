@@ -1,0 +1,29 @@
+// Write a Java Program to implement I/O Decorator for converting uppercase letters to 
+// lower case letters.
+import java.io.*;
+
+public class Slip1q1 {
+    public static void main(String[] args) {
+        try {
+            // Input file containing uppercase text
+            FileReader fr = new FileReader("slip1q1.txt");
+
+            // Decorator to convert characters to lowercase
+            BufferedReader br = new BufferedReader(fr);
+
+            int ch;
+            System.out.println("Converted Text:");
+            
+            while ((ch = br.read()) != -1) {
+                char lower = Character.toLowerCase((char) ch);
+                System.out.print(lower);
+            }
+
+            br.close();
+            fr.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

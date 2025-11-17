@@ -1,0 +1,38 @@
+ a) Read your name and print Hello message
+
+name = input()
+print("Hello", name)
+
+b) Read two numbers and print sum, difference, product, division
+
+a = float(input())
+b = float(input())
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)
+
+c) Word count and character count of a string
+
+s = input()
+words = s.split()
+print(len(words))
+print(len(s))
+
+
+d) Area of rectangle, triangle, circle based on user input
+
+shape = input()
+if shape == "rectangle":
+    l = float(input())
+    w = float(input())
+    print(l * w)
+
+elif shape == "triangle":
+    b = float(input())
+    h = float(input())
+    print(0.5 * b * h)
+
+elif shape == "circle":
+    r = float(input())
+    print(3.14159 * r * r)

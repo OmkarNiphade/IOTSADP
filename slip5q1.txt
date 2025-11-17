@@ -1,0 +1,45 @@
+// Write a Java Program to implement Adapter pattern for Enumeration iterator
+import java.util.*;
+
+class EnumerationIteratorAdapter implements Iterator<Object> {
+    Enumeration<?> enumeration;
+
+    public EnumerationIteratorAdapter(Enumeration<?> enumeration) {
+        this.enumeration = enumeration;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return enumeration.hasMoreElements();
+    }
+
+    @Override
+    public Object next() {
+        return enumeration.nextElement();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Remove not supported");
+    }
+}
+
+public class Slip5q1 {
+    public static void main(String[] args) {
+        // Enumeration (old style)
+        Vector<String> v = new Vector<>();
+        v.add("Apple");
+        v.add("Banana");
+        v.add("Mango");
+
+        Enumeration<String> enumeration = v.elements();
+
+        // Use adapter to convert Enumeration → Iterator
+        Iterator<Object> it = new EnumerationIteratorAdapter(enumeration);
+
+        System.out.println("Using Iterator (adapted from Enumeration):");
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+}

@@ -1,0 +1,65 @@
+// ite a Java Program to implement Observer Design Pattern for number conversion. 
+// Accept a number in Decimal form and represent it in Hexadecimal, Octal and Binary. 
+// Change the Number and it reflects in other forms also [15 M]
+
+interface Observer {
+    void update(int number);
+}
+import java.util.*;
+
+class NumberSubject {
+    private List<Observer> observers = new ArrayList<>();
+    private int number;
+
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+        notifyAllObservers();
+    }
+
+    private void notifyAllObservers() {
+        for (Observer o : observers) {
+            o.update(number);
+        }
+    }
+}
+class BinaryObserver implements Observer {
+    public void update(int number) {
+        System.out.println("Binary: " + Integer.toBinaryString(number));
+    }
+}
+class OctalObserver implements Observer {
+    public void update(int number) {
+        System.out.println("Octal: " + Integer.toOctalString(number));
+    }
+}
+class HexObserver implements Observer {
+    public void update(int number) {
+        System.out.println("Hex: " + Integer.toHexString(number));
+    }
+}
+import java.util.Scanner;
+
+public class Slip16q1 {
+    public static void main(String[] args) {
+
+        NumberSubject subject = new NumberSubject();
+
+        subject.addObserver(new BinaryObserver());
+        subject.addObserver(new OctalObserver());
+        subject.addObserver(new HexObserver());
+
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("\nEnter a decimal number (or -1 to exit): ");
+            int num = sc.nextInt();
+            if (num == -1) break;
+
+            subject.setNumber(num);
+        }
+    }
+}

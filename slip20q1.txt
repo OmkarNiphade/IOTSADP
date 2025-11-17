@@ -1,0 +1,10 @@
+import java.io.*;
+public class LowerCaseDecorator {
+ public static void main(String[] args) throws Exception {
+ InputStreamReader in = new InputStreamReader(System.in);
+ BufferedReader br = new BufferedReader(in);
+ System.out.println("Enter text in Uppercase:");
+ String text = br.readLine();
+ String lower = text.toLowerCase();
+ System.out.println("Lowercase Output: " + lower);
+ }

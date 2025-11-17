@@ -1,0 +1,15 @@
+int touchPin = 2;
+int led = 13;
+void setup() {
+ pinMode(touchPin, INPUT);
+ pinMode(led, OUTPUT);
+}
+void loop() {
+ int value = digitalRead(touchPin);
+ if (value == HIGH) {
+ digitalWrite(led, HIGH); 
+ }
+ else {
+ digitalWrite(led, LOW); 
+ }
+}

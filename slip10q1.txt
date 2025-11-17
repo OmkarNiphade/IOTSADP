@@ -1,0 +1,86 @@
+// Write a Java Program to implement Strategy Pattern for Duck Behavior. Create 
+// instance variable that holds current state of Duck from there, we just need to handle 
+// all Flying Behaviors and Quack Behavior [
+interface FlyBehavior {
+    void fly();
+}
+interface QuackBehavior {
+    void quack();
+}
+interface QuackBehavior {
+    void quack();
+}
+class Quack implements QuackBehavior {
+    public void quack() {
+        System.out.println("Quack!");
+    }
+}
+
+class MuteQuack implements QuackBehavior {
+    public void quack() {
+        System.out.println("<< Silence >>");
+    }
+}
+abstract class Duck {
+    FlyBehavior flyBehavior;
+    QuackBehavior quackBehavior;
+
+    public void performFly() {
+        flyBehavior.fly();
+    }
+
+    public void performQuack() {
+        quackBehavior.quack();
+    }
+
+    // Allow behavior change at runtime
+    public void setFlyBehavior(FlyBehavior fb) {
+        flyBehavior = fb;
+    }
+
+    public void setQuackBehavior(QuackBehavior qb) {
+        quackBehavior = qb;
+    }
+
+    public abstract void display();
+}
+class MallardDuck extends Duck {
+    MallardDuck() {
+        flyBehavior = new FlyWithWings();
+        quackBehavior = new Quack();
+    }
+
+    public void display() {
+        System.out.println("I am a Mallard Duck");
+    }
+}
+
+class RubberDuck extends Duck {
+    RubberDuck() {
+        flyBehavior = new FlyNoWay();
+        quackBehavior = new MuteQuack();
+    }
+
+    public void display() {
+        System.out.println("I am a Rubber Duck");
+    }
+}
+public class Slip10q1 {
+    public static void main(String[] args) {
+
+        Duck mallard = new MallardDuck();
+        mallard.display();
+        mallard.performFly();
+        mallard.performQuack();
+
+        Duck rubber = new RubberDuck();
+        rubber.display();
+        rubber.performFly();
+        rubber.performQuack();
+
+        System.out.println("\n--- Changing Rubber Duck Fly Behavior at Runtime ---");
+        rubber.setFlyBehavior(new FlyWithWings());
+        rubber.performFly();
+    }
+}
+

@@ -1,0 +1,43 @@
+class Pizza {
+    public void prepare() { System.out.println("Preparing Pizza"); }
+    public void bake() { System.out.println("Baking Pizza"); }
+    public void cut() { System.out.println("Cutting Pizza"); }
+    public void box() { System.out.println("Boxing Pizza"); }
+}
+class NyStyleCheesePizza extends Pizza {
+    public NyStyleCheesePizza() {
+    System.out.println("NY Style Cheese Pizza");
+    }
+}
+class ChicagoStyleCheesePizza extends Pizza {
+    public ChicagoStyleCheesePizza() {
+        System.out.println("Chicago Style Cheese Pizza");
+        }
+}
+class PizzaStore {
+    public Pizza createPizza(String type) {
+    if (type.equals("ny")) {
+    return new NyStyleCheesePizza();
+    } else if (type.equals("chicago")) {
+    return new ChicagoStyleCheesePizza();
+    }
+    return null;
+    }
+    public Pizza orderPizza(String type) {
+    Pizza p = createPizza(type);
+    p.prepare();
+    p.bake();
+    p.cut();
+    p.box();
+    return p;
+    }
+}
+public class PizzaFactoryDemo {
+    public static void main(String[] args) {
+    PizzaStore store = new PizzaStore();
+    System.out.println("--- Ordering NY Pizza ---");
+    store.orderPizza("ny");
+    System.out.println("\n--- Ordering Chicago Pizza ---");
+    store.orderPizza("chicago");
+    }
+}

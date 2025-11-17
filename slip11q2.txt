@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+LED1 = 17
+LED2 = 18
+SW1 = 22
+SW2 = 23
+
+GPIO.setup(LED1, GPIO.OUT)
+GPIO.setup(LED2, GPIO.OUT)
+GPIO.setup(SW1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(SW2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+def light_led():
+    print("LED1 ON. Press Ctrl+C to stop.")
+    try:
+        while True:
+            GPIO.output(LED1, GPIO.HIGH)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        GPIO.output(LED1, GPIO.LOW)
+
+def switches_to_leds():
+    print("Switch mode ON. Press Ctrl+C to stop.")
+    try:
+        while True:
+            s1 = GPIO.input(SW1)
+            s2 = GPIO.input(SW2)
+            GPIO.output(LED1, GPIO.HIGH if s1 else GPIO.LOW)
+            GPIO.output(LED2, GPIO.HIGH if s2 else GPIO.LOW)
+            time.sleep(0.05)
+    except KeyboardInterrupt:
+        GPIO.output(LED1, GPIO.LOW)
+        GPIO.output(LED2, GPIO.LOW)
+
+def flash_led_from_file():
+    fname = input("Enter time file name: ")
+    try:
+        with open(fname, "r") as f:
+            t = f.read().strip().split()
+            on_time = float(t[0])
+            off_time = float(t[1])
+    except:
+        print("Error reading times. File must contain: ON_TIME OFF_TIME")
+        return
+
+    print(f"Flashing LED1 with ON={on_time}s OFF={off_time}s. Ctrl+C to stop.")
+    try:
+        while True:
+            GPIO.output(LED1, GPIO.HIGH)
+            time.sleep(on_time)
+            GPIO.output(LED1, GPIO.LOW)
+            time.sleep(off_time)
+    except KeyboardInterrupt:
+        GPIO.output(LED1, GPIO.LOW)
+
+while True:
+    print("\n--- Raspberry Pi Menu ---")
+    print("1. Light an LED")
+    print("2. Switches controlling LEDs")
+    print("3. Flash LED using ON/OFF time from file")
+    print("4. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        light_led()
+    elif choice == "2":
+        switches_to_leds()
+    elif choice == "3":
+        flash_led_from_file()
+    elif choice == "4":
+        GPIO.cleanup()
+        print("Exiting...")
+        break
+    else:
+        print("Invalid choice")
+
+//python3 file_name.py

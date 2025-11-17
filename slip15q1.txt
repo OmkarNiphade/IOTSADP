@@ -1,0 +1,61 @@
+// Write a Java Program to implement Facade Design Pattern for Home Theater
+class Lights {
+    void on()  { System.out.println("Lights ON"); }
+    void dim() { System.out.println("Lights DIMMED"); }
+    void off() { System.out.println("Lights OFF"); }
+}
+
+class TV {
+    void on()  { System.out.println("TV ON"); }
+    void off() { System.out.println("TV OFF"); }
+}
+
+class DVDPlayer {
+    void on()          { System.out.println("DVD Player ON"); }
+    void playMovie()   { System.out.println("Playing Movie..."); }
+    void stop()        { System.out.println("Stopping DVD"); }
+    void off()         { System.out.println("DVD Player OFF"); }
+}
+
+class SoundSystem {
+    void on()       { System.out.println("Sound System ON"); }
+    void setVolume(){ System.out.println("Volume Set to Medium"); }
+    void off()      { System.out.println("Sound System OFF"); }
+}
+class Lights {
+    void on()  { System.out.println("Lights ON"); }
+    void dim() { System.out.println("Lights DIMMED"); }
+    void off() { System.out.println("Lights OFF"); }
+}
+
+class TV {
+    void on()  { System.out.println("TV ON"); }
+    void off() { System.out.println("TV OFF"); }
+}
+
+class DVDPlayer {
+    void on()          { System.out.println("DVD Player ON"); }
+    void playMovie()   { System.out.println("Playing Movie..."); }
+    void stop()        { System.out.println("Stopping DVD"); }
+    void off()         { System.out.println("DVD Player OFF"); }
+}
+
+class SoundSystem {
+    void on()       { System.out.println("Sound System ON"); }
+    void setVolume(){ System.out.println("Volume Set to Medium"); }
+    void off()      { System.out.println("Sound System OFF"); }
+}
+public class SLip15q1 {
+    public static void main(String[] args) {
+
+        Lights lights = new Lights();
+        TV tv = new TV();
+        DVDPlayer dvd = new DVDPlayer();
+        SoundSystem sound = new SoundSystem();
+
+        HomeTheaterFacade home = new HomeTheaterFacade(lights, tv, dvd, sound);
+
+        home.watchMovie();
+        home.stopMovie();
+    }
+}

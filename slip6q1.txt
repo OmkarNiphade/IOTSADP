@@ -1,0 +1,61 @@
+// Write a Java Program to implement command pattern to test Remote Control
+interface Command {
+    void execute();
+}
+class Light {
+    public void on() {
+        System.out.println("Light is ON");
+    }
+    public void off() {
+        System.out.println("Light is OFF");
+    }
+}
+class LightOnCommand implements Command {
+    Light light;
+
+    LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    public void execute() {
+        light.on();
+    }
+}
+
+class LightOffCommand implements Command {
+    Light light;
+
+    LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    public void execute() {
+        light.off();
+    }
+}
+class RemoteControl {
+    Command slot;
+
+    public void setCommand(Command command) {
+        slot = command;
+    }
+
+    public void pressButton() {
+        slot.execute();
+    }
+}
+public class Slip6q1 {
+    public static void main(String[] args) {
+
+        RemoteControl remote = new RemoteControl();
+        Light light = new Light();
+
+        // Turn ON
+        remote.setCommand(new LightOnCommand(light));
+        remote.pressButton();
+
+        // Turn OFF
+        remote.setCommand(new LightOffCommand(light));
+        remote.pressButton();
+    }
+}

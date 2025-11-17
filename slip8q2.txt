@@ -1,0 +1,56 @@
+# show all files and folders
+ls
+
+# Change directory
+cd Documents
+
+# Create an empty file
+touch file1.txt
+
+# Rename or move a file
+mv file1.txt newfile.txt
+
+# Delete a file
+rm newfile.txt
+
+# Show manual/help for any command
+man ls
+
+# Create a new directory
+mkdir myfolder
+
+# Remove an empty directory
+rmdir myfolder
+
+# Create a tar archive of a folder
+tar -cvf backup.tar myfolder
+
+# Compress a file using gzip
+gzip backup.tar
+
+# Display content of a file
+cat notes.txt
+
+# View long text page by page
+more notes.txt
+
+# View text with scroll up/down
+less notes.txt
+
+# Show running processes
+ps
+
+# Run command as administrator
+sudo apt update
+
+# Open cron job scheduler
+crontab -e
+
+# Change file ownership to user 'pi'
+sudo chown pi notes.txt
+
+# Change file group to 'users'
+sudo chgrp users notes.txt
+
+# Test internet connection
+ping google.com

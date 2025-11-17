@@ -1,0 +1,17 @@
+char inputByte;
+int led = 2;
+void setup() {
+ Serial.begin(9600);
+ pinMode(led, OUTPUT);
+}
+void loop() {
+ while (Serial.available() > 0) {
+ inputByte = Serial.read(); // Read incoming character
+ if (inputByte == '1') {
+ digitalWrite(led, HIGH); // LED ON
+ }
+ else if (inputByte == '2') {
+ digitalWrite(led, LOW); // LED OFF
+ }
+ }
+}

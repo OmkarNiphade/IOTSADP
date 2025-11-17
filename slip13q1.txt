@@ -1,0 +1,56 @@
+// Write a Java Program to implement an Adapter design pattern in mobile charger. 
+// Define two classes – Volt (to measure volts) and Socket (producing constant volts of 
+// 120V). Build an adapter that can produce 3 volts, 12 volts and default 120 volts. 
+// Implements Adapter pattern using Class Adapter [1
+class Volt {
+    private int volts;
+
+    public Volt(int volts) {
+        this.volts = volts;
+    }
+
+    public int getVolts() {
+        return volts;
+    }
+}
+class Socket {
+    public Volt getVolt() {
+        return new Volt(120);   // constant output
+    }
+}
+interface MobileAdapter {
+    Volt get3Volt();
+    Volt get12Volt();
+    Volt get120Volt();
+}
+class SocketAdapter extends Socket implements MobileAdapter {
+
+    private Volt convertVolt(Volt v, int divider) {
+        return new Volt(v.getVolts() / divider);
+    }
+
+    @Override
+    public Volt get3Volt() {
+        return convertVolt(getVolt(), 40);
+    }
+
+    @Override
+    public Volt get12Volt() {
+        return convertVolt(getVolt(), 10);
+    }
+
+    @Override
+    public Volt get120Volt() {
+        return getVolt();
+    }
+}
+public class Slip13q1 {
+    public static void main(String[] args) {
+
+        MobileAdapter adapter = new SocketAdapter();
+
+        System.out.println("Mobile needs 3V: " + adapter.get3Volt().getVolts());
+        System.out.println("Router needs 12V: " + adapter.get12Volt().getVolts());
+        System.out.println("Default socket supply: " + adapter.get120Volt().getVolts());
+    }
+}

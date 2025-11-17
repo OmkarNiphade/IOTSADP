@@ -1,0 +1,35 @@
+a) Print a name 'n' times (for loop + while loop)
+
+name = input()
+n = int(input())
+for i in range(n):
+    print(name)
+i = 0
+while i < n:
+    print(name)
+    i += 1
+
+b) Handle Divide-by-Zero Exception
+
+try:
+    a = int(input())
+    b = int(input())
+    print(a / b)
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+
+c) Print current time 10 times at 10-second interval
+
+import time
+from datetime import datetime
+
+for i in range(10):
+    print(datetime.now())
+    time.sleep(10)
+
+d) Read file line by line and print word count of each line
+
+filename = input()
+with open(filename, "r") as f:
+    for line in f:
+        print(len(line.split()))

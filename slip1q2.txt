@@ -1,0 +1,34 @@
+// Q.2 Write a program to sense the available networks using Arduino
+#include <WiFi.h>       // For ESP32
+// #include <ESP8266WiFi.h> // Use this instead for ESP8266
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();    // Disconnect from previous WiFi
+
+  delay(1000);
+  Serial.println("Scanning for WiFi networks...");
+}
+
+void loop() {
+  int n = WiFi.scanNetworks();  // Scan networks
+
+  Serial.println("Scan complete!");
+  if (n == 0) {
+    Serial.println("No networks found");
+  } else {
+    Serial.println("Available Networks:");
+    for (int i = 0; i < n; i++) {
+      Serial.print(i + 1);
+      Serial.print(": ");
+      Serial.print(WiFi.SSID(i));   // Network Name
+      Serial.print(" (Signal: ");
+      Serial.print(WiFi.RSSI(i));   // Signal Strength
+      Serial.println(" dBm)");
+    }
+  }
+
+  Serial.println("\nRescanning in 5 seconds...\n");
+  delay(5000);   // Scan again after 5 sec
+}

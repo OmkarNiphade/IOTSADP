@@ -1,0 +1,60 @@
+// Write a Java Program to implement Command Design Pattern for Command Interface 
+// with execute() . Use this to create variety of commands for LightOnCommand, 
+// LightOffCommand, GarageDoorUpCommand, StereoOnWithCDComman. [1
+interface Command {
+    void execute();
+}
+class Light {
+    void on()  { System.out.println("Light is ON"); }
+    void off() { System.out.println("Light is OFF"); }
+}
+class GarageDoor {
+    void up() { System.out.println("Garage Door OPENED"); }
+}
+class Stereo {
+    void on() { System.out.println("Stereo ON with CD"); }
+}
+class LightOnCommand implements Command {
+    Light light;
+
+    LightOnCommand(Light light) { this.light = light; }
+
+    public void execute() { light.on(); }
+}
+class GarageDoorUpCommand implements Command {
+    GarageDoor door;
+
+    GarageDoorUpCommand(GarageDoor door) { this.door = door; }
+
+    public void execute() { door.up(); }
+}
+class StereoOnWithCDCommand implements Command {
+    Stereo stereo;
+
+    StereoOnWithCDCommand(Stereo stereo) { this.stereo = stereo; }
+
+    public void execute() { stereo.on(); }
+}
+
+public class Slip14q1 {
+    public static void main(String[] args) {
+
+        RemoteControl remote = new RemoteControl();
+
+        Light light = new Light();
+        GarageDoor door = new GarageDoor();
+        Stereo stereo = new Stereo();
+
+        remote.setCommand(new LightOnCommand(light));
+        remote.pressButton();
+
+        remote.setCommand(new LightOffCommand(light));
+        remote.pressButton();
+
+        remote.setCommand(new GarageDoorUpCommand(door));
+        remote.pressButton();
+
+        remote.setCommand(new StereoOnWithCDCommand(stereo));
+        remote.pressButton();
+    }
+}

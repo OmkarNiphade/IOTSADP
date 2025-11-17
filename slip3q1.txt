@@ -1,0 +1,53 @@
+import java.util.Observable;
+
+class WeatherData extends Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void measurementsChanged() {
+        setChanged();
+        notifyObservers();
+    }
+
+    public void setMeasurement(float t, float h, float p) {
+        this.temperature = t;
+        this.humidity = h;
+        this.pressure = p;
+        measurementsChanged();
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
+    }
+}
+
+class CurrentDisplay implements java.util.Observer {
+    @Override
+    public void update(Observable o, Object arg) {
+        WeatherData wd = (WeatherData) o;
+        System.out.println("Temp: " + wd.getTemperature() +
+                           " Humidity: " + wd.getHumidity() +
+                           " Pressure: " + wd.getPressure());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        WeatherData wd = new WeatherData();
+        CurrentDisplay cd = new CurrentDisplay();
+
+        wd.addObserver(cd);
+
+        wd.setMeasurement(30, 65, 1012);
+        wd.setMeasurement(28, 70, 1008);
+    }
+}

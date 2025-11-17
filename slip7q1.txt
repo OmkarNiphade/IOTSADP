@@ -1,0 +1,87 @@
+// Write a Java Program to implement undo command to test Ceiling fan.
+interface Command {
+    void execute();
+    void undo();
+}
+class CeilingFan {
+    public void high() {
+        System.out.println("Ceiling Fan set to HIGH");
+    }
+
+    public void off() {
+        System.out.println("Ceiling Fan is OFF");
+    }
+}
+class FanHighCommand implements Command {
+    CeilingFan fan;
+
+    FanHighCommand(CeilingFan fan) {
+        this.fan = fan;
+    }
+
+    public void execute() {
+        fan.high();
+    }
+
+    public void undo() {
+        fan.off();
+    }
+}
+class FanOffCommand implements Command {
+    CeilingFan fan;
+
+    FanOffCommand(CeilingFan fan) {
+        this.fan = fan;
+    }
+
+    public void execute() {
+        fan.off();
+    }
+
+    public void undo() {
+        fan.high();
+    }
+}
+class RemoteControl {
+    Command slot;
+    Command lastCommand;
+
+    public void setCommand(Command command) {
+        slot = command;
+    }
+
+    public void pressButton() {
+        slot.execute();
+        lastCommand = slot;
+    }
+
+    public void pressUndo() {
+        if (lastCommand != null) {
+            lastCommand.undo();
+        }
+    }
+}
+public class Slip7q1 {
+    public static void main(String[] args) {
+
+        RemoteControl remote = new RemoteControl();
+        CeilingFan fan = new CeilingFan();
+
+        Command fanHigh = new FanHighCommand(fan);
+        Command fanOff = new FanOffCommand(fan);
+
+        System.out.println("--- Turn Fan HIGH ---");
+        remote.setCommand(fanHigh);
+        remote.pressButton();
+
+        System.out.println("--- Undo (Turn Fan OFF) ---");
+        remote.pressUndo();
+
+        System.out.println("--- Turn Fan OFF ---");
+        remote.setCommand(fanOff);
+        remote.pressButton();
+
+        System.out.println("--- Undo (Turn Fan HIGH) ---");
+        remote.pressUndo();
+    }
+}

@@ -1,0 +1,64 @@
+// Write a java program to implement Adapter pattern to design Heart Model to Beat 
+// Model [15 M]
+interface BeatModel {
+    int getBeat();          // get current heart beat
+    void start();           // start beating
+    void stop();            // stop beating
+}
+class HeartModel {
+    private int heartRate = 72;  // sample value
+
+    public int getHeartRate() {
+        return heartRate;
+    }
+
+    public void increaseRate() {
+        heartRate += 5;
+    }
+
+    public void decreaseRate() {
+        heartRate -= 5;
+    }
+}
+class HeartModelAdapter implements BeatModel {
+
+    private HeartModel heart;
+
+    public HeartModelAdapter(HeartModel heart) {
+        this.heart = heart;
+    }
+
+    @Override
+    public int getBeat() {
+        return heart.getHeartRate();
+    }
+
+    @Override
+    public void start() {
+        System.out.println("Heart model started (simulated).");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Heart model stopped (simulated).");
+    }
+}
+public class Slip11q1 {
+    public static void main(String[] args) {
+
+        HeartModel heart = new HeartModel();               // Adaptee
+        BeatModel beatModel = new HeartModelAdapter(heart); // Adapter
+
+        // Use it like BeatModel
+        beatModel.start();
+        System.out.println("Current Heart Beat: " + beatModel.getBeat());
+
+        heart.increaseRate();
+        System.out.println("After Increase: " + beatModel.getBeat());
+
+        heart.decreaseRate();
+        System.out.println("After Decrease: " + beatModel.getBeat());
+
+        beatModel.stop();
+    }
+}

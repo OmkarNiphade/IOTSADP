@@ -1,0 +1,60 @@
+// Q.1 Write a Java Program to implement Abstract Factory Pattern for Shape interface.
+interface Shape {
+    void draw();
+}
+class Circle implements Shape {
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+class Rectangle implements Shape {
+    public void draw() {
+        System.out.println("Drawing Rectangle");
+    }
+}
+
+class Square implements Shape {
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
+}
+interface AbstractFactory {
+    Shape getShape(String type);
+}
+class RoundedShapeFactory implements AbstractFactory {
+    public Shape getShape(String type) {
+        if (type.equalsIgnoreCase("circle")) return new Circle();
+        return null;
+    }
+}
+class NormalShapeFactory implements AbstractFactory {
+    public Shape getShape(String type) {
+        if (type.equalsIgnoreCase("square")) return new Square();
+        if (type.equalsIgnoreCase("rectangle")) return new Rectangle();
+        return null;
+    }
+}
+class FactoryProducer {
+    public static AbstractFactory getFactory(boolean rounded) {
+        if (rounded) return new RoundedShapeFactory();
+        return new NormalShapeFactory();
+    }
+}
+public class Slip17q1 {
+    public static void main(String[] args) {
+
+        // Get Normal Shape Factory
+        AbstractFactory normalFactory = FactoryProducer.getFactory(false);
+        Shape s1 = normalFactory.getShape("square");
+        s1.draw();
+
+        Shape s2 = normalFactory.getShape("rectangle");
+        s2.draw();
+
+        // Get Rounded Shape Factory
+        AbstractFactory roundFactory = FactoryProducer.getFactory(true);
+        Shape s3 = roundFactory.getShape("circle");
+        s3.draw();
+    }
+}
